@@ -5,6 +5,9 @@ import { InitDataPage } from '@/pages/InitDataPage.tsx';
 import { LaunchParamsPage } from '@/pages/LaunchParamsPage.tsx';
 import { ThemeParamsPage } from '@/pages/ThemeParamsPage.tsx';
 import { TONConnectPage } from '@/pages/TONConnectPage/TONConnectPage';
+import { PrivacyPolicyPage } from '@/pages/PrivacyPolicyPage/PrivacyPolicyPage';
+import { ProfilePage } from '@/pages/ProfilePage/ProfilePage';
+import { SharePage } from '@/pages/SharePage/SharePage';
 
 interface Route {
   path: string;
@@ -41,4 +44,8 @@ export const routes: Route[] = [
       </svg>
     ),
   },
+  { path: '/me', Component: ProfilePage, title: 'Profile Page' },
+  { path: '/share', Component: SharePage, title: 'Share' },
+  { path: '/privacy', Component: PrivacyPolicyPage, title: 'Privacy' },
+
 ];

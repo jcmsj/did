@@ -1,206 +1,158 @@
-# Telegram Mini Apps React Template
 
-This template demonstrates how developers can implement a single-page
-application on the Telegram Mini Apps platform using the following technologies
-and libraries:
+# Decentralized Identity Verification for Digital Nomads
 
-- [React](https://react.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [TON Connect](https://docs.ton.org/develop/dapps/ton-connect/overview)
-- [@telegram-apps SDK](https://docs.telegram-mini-apps.com/packages/telegram-apps-sdk/2-x)
-- [Telegram UI](https://github.com/Telegram-Mini-Apps/TelegramUI)
-- [Vite](https://vitejs.dev/)
+This project aims to provide digital nomads and remote workers with a decentralized identity solution, allowing them to securely manage verifiable credentials for residency, taxation, employment history, and more. Using the TON (The Open Network) blockchain, the solution emphasizes user privacy, data security, and decentralization.
 
-> The template was created using [npm](https://www.npmjs.com/). Therefore, it is
-> required to use it for this project as well. Using other package managers, you
-> will receive a corresponding error.
+## Overview
 
-## Install Dependencies
+As the gig economy and remote work grow, digital nomads face unique challenges in managing credentials and verifying identity in different jurisdictions. This project aims to address these challenges by providing a decentralized solution where users can create, store, and share verifiable credentials. This empowers digital nomads to control their identity information while facilitating trust with employers, landlords, government entities, and other stakeholders.
 
-If you have just cloned this template, you should install the project
-dependencies using the command:
+## Project Objectives
 
-```Bash
-npm install
+1. **Decentralized Identity (DID) Profiles**: Enable users to create DID profiles on the TON blockchain, capturing key identity attributes for verification.
+2. **Verifiable Credentials (VCs)**: Provide support for issuing, storing, and sharing VCs, such as proof of residency and employment history, verified by trusted entities.
+3. **Selective Credential Sharing**: Allow users to selectively share credentials with third parties without exposing unnecessary personal information.
+4. **Privacy and Data Security**: Ensure privacy-preserving credential verification through zero-knowledge proofs (ZKPs).
+5. **Integration with TON Wallet**: Enable seamless access and management of credentials through users' TON wallets.
+
+## Key Features
+
+- **DID Profile Creation**: Each user creates a decentralized identity on the TON blockchain, representing their verified digital identity.
+- **Verifiable Credential Issuance and Management**: Trusted entities issue and verify credentials that are stored on-chain and managed by users.
+- **Selective Disclosure**: Users can selectively disclose certain credentials while maintaining control over their private information.
+- **Zero-Knowledge Proofs**: Use ZKPs to allow users to verify attributes without exposing full data, ensuring privacy in transactions.
+- **TON Wallet Integration**: Credentials can be managed via the TON wallet, allowing for easy access, sharing, and management within the same ecosystem.
+
+## Technical Architecture
+
+```mermaid
+graph TD
+    %% Main User Flow
+    A[User with TON Wallet] -->|Initialize| B[DID Profile Creation]
+    B -->|Submit| C{Profile Validation}
+    
+    %% Profile Creation Branch
+    C -->|Valid| D[Generate DID Document]
+    C -->|Invalid| A
+    D -->|Store| E[TON Blockchain Registry]
+    
+    %% Credential Issuance Flow
+    E -->|Request Credentials| F{Credential Issuers}
+    F -->|KYC Verification| G[Identity Verification]
+    F -->|Academic Credentials| H[Educational Verification]
+    F -->|Professional Certs| I[Professional Verification]
+    
+    %% Credential Processing
+    G & H & I -->|Issue| J[Verifiable Credentials]
+    J -->|Encrypt| K[Secure Storage]
+    K -->|Store on IPFS| L[IPFS Storage]
+    K -->|Store on TON| M[TON Storage]
+    
+    %% Verification Flow
+    L & M -->|Access Request| N{Credential Verifiers}
+    N -->|Initiate| O[Selective Disclosure Protocol]
+    O -->|Generate| P[Zero-Knowledge Proofs]
+    
+    %% Verification Results
+    P -->|Verify| Q{Verification Check}
+    Q -->|Success| R[Access Granted]
+    Q -->|Fail| S[Access Denied]
+    
+    %% Integration Loop
+    R -->|Update Status| T[Trusted Integrators]
+    T -->|New Request| N
+    S -->|Retry| O
+    
+    %% Recovery Flow
+    A -->|Lost Access| U[Recovery Process]
+    U -->|Verify Identity| V[Identity Recovery]
+    V -->|Restore| A
+
+    %% Styling
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px
+    classDef decision fill:#f0f0f0,stroke:#333,stroke-width:2px
+    classDef storage fill:#ffffff,stroke:#333,stroke-width:1px
+    classDef process fill:#ffffff,stroke:#333,stroke-width:1px
+    
+    class A,B,D,G,H,I,J,K,L,M,O,P,R,S,T,U,V process
+    class C,F,N,Q decision
+    class E,L,M storage
 ```
 
-## Scripts
+## Stakeholders
 
-This project contains the following scripts:
+- **Primary Users**: Digital nomads, remote workers, freelancers, and expatriates.
+- **Credential Issuers**: Entities like employers, tax authorities, and local government bodies.
+- **Credential Verifiers**: Prospective employers, rental agencies, government officials, and online platforms.
+- **TON Community**: Developers, maintainers, and contributors supporting the platform.
+- **Third-Party Integrators**: Companies interested in integrating decentralized identity verification.
 
-- `dev`. Runs the application in development mode.
-- `build`. Builds the application for production.
-- `lint`. Runs [eslint](https://eslint.org/) to ensure the code quality meets
-  the required standards.
-- `deploy`. Deploys the application to GitHub Pages.
+## Roadmap
 
-To run a script, use the `npm run` command:
+### Phase 1: MVP Development (Q1 2024)
+- Implement DID profiles, credential issuance, and storage.
+- Begin onboarding users and testing core functionalities.
 
-```Bash
-npm run {script}
-# Example: npm run build
-```
+### Phase 2: Wallet Integration & Privacy Features (Q2 2024)
+- Integrate TON wallet for seamless credential management.
+- Implement ZKPs for secure, privacy-focused credential sharing.
 
-## Create Bot and Mini App
+### Phase 3: Partnerships with Credential Issuers & Verifiers (Q3 2024)
+- Partner with freelance platforms, remote work agencies, and government entities.
+- Roll out API access for verifiers.
 
-Before you start, make sure you have already created a Telegram Bot. Here is
-a [comprehensive guide](https://docs.telegram-mini-apps.com/platform/creating-new-app)
-on how to do it.
+### Phase 4: Full Launch (Q4 2024)
+- Expand user base, foster ecosystem growth, and enhance features based on feedback.
 
-## Run
+## Success Metrics
 
-Although Mini Apps are designed to be opened
-within [Telegram applications](https://docs.telegram-mini-apps.com/platform/about#supported-applications),
-you can still develop and test them outside of Telegram during the development
-process.
+- **User Adoption**: Track the number of digital nomads using the platform.
+- **Credential Volume**: Monitor the number of credentials issued and verified.
+- **Verification Speed**: Measure the time taken for successful credential verification.
+- **Privacy Compliance**: Ensure no unauthorized data disclosures.
 
-To run the application in the development mode, use the `dev` script:
+## Risks and Mitigations
 
-```bash
-npm run dev
-```
+- **Privacy Risks**: Use ZKPs and selective disclosure to protect user data.
+- **Data Loss**: Offer recovery options like multi-signature and trusted contacts.
+- **Adoption Risks**: Launch promotional programs to attract credential issuers and verifiers.
 
-After this, you will see a similar message in your terminal:
+## Technology Stack
 
-```bash
-VITE v5.2.12  ready in 237 ms
+- **Blockchain**: TON for DID registration, credential issuance, and verification.
+- **Storage**: IPFS for secure, decentralized data storage.
+- **Zero-Knowledge Proofs**: For secure, privacy-preserving verifications.
+- **Frontend**: Web3-based UI with mobile support.
+- **Wallet Integration**: TON wallet for credential management.
 
-➜  Local:   https://localhost:5173/reactjs-template
-➜  Network: https://172.18.16.1:5173/reactjs-template
-➜  Network: https://172.19.32.1:5173/reactjs-template
-➜  Network: https://192.168.0.171:5173/reactjs-template
-➜  press h + enter to show help
-```
+## Getting Started
 
-Here, you can see the `Local` link, available locally, and `Network` links
-accessible to all devices in the same network with the current device.
+### Prerequisites
+- TON wallet installation
+- Basic understanding of Web3 and blockchain technology
 
-To view the application, you need to open the `Local`
-link (`https://localhost:5173/reactjs-template` in this example) in your
-browser:
+### Installation
 
-![Application](assets/application.png)
+1. **Clone the repository**
+    ```bash
+    git clone https://github.com/TadashiJei/Decentralized-Identity-Verification-for-Digital-Nomads
+    cd identity-verification
+    ```
 
-It is important to note that some libraries in this template, such as
-`@telegram-apps/sdk`, are not intended for use outside of Telegram.
+2. **Install dependencies**
+    ```bash
+    npm install
+    ```
 
-Nevertheless, they appear to function properly. This is because the
-`src/mockEnv.ts` file, which is imported in the application's entry point (
-`src/index.ts`), employs the `mockTelegramEnv` function to simulate the Telegram
-environment. This trick convinces the application that it is running in a
-Telegram-based environment. Therefore, be cautious not to use this function in
-production mode unless you fully understand its implications.
+3. **Start the application**
+    ```bash
+    npm start
+    ```
 
-> [!WARNING]
-> Because we are using self-signed SSL certificates, the Android and iOS
-> Telegram applications will not be able to display the application. These
-> operating systems enforce stricter security measures, preventing the Mini App
-> from loading. To address this issue, refer to
-> [this guide](https://docs.telegram-mini-apps.com/platform/getting-app-link#remote).
+## Contributing
 
-## Deploy
+Contributions are welcome! Please open a pull request or submit issues for discussion.
 
-This boilerplate uses GitHub Pages as the way to host the application
-externally. GitHub Pages provides a CDN which will let your users receive the
-application rapidly. Alternatively, you could use such services
-as [Heroku](https://www.heroku.com/) or [Vercel](https://vercel.com).
+## License
 
-### Manual Deployment
-
-This boilerplate uses the [gh-pages](https://www.npmjs.com/package/gh-pages)
-tool, which allows deploying your application right from your PC.
-
-#### Configuring
-
-Before running the deployment process, ensure that you have done the following:
-
-1. Replaced the `homepage` value in `package.json`. The GitHub Pages deploy tool
-   uses this value to
-   determine the related GitHub project.
-2. Replaced the `base` value in `vite.config.ts` and have set it to the name of
-   your GitHub
-   repository. Vite will use this value when creating paths to static assets.
-
-For instance, if your GitHub username is `telegram-mini-apps` and the repository
-name is `is-awesome`, the value in the `homepage` field should be the following:
-
-```json
-{
-  "homepage": "https://telegram-mini-apps.github.io/is-awesome"
-}
-```
-
-And `vite.config.ts` should have this content:
-
-```ts
-export default defineConfig({
-  base: '/is-awesome/',
-  // ...
-});
-```
-
-You can find more information on configuring the deployment in the `gh-pages`
-[docs](https://github.com/tschaub/gh-pages?tab=readme-ov-file#github-pages-project-sites).
-
-#### Before Deploying
-
-Before deploying the application, make sure that you've built it and going to
-deploy the fresh static files:
-
-```bash
-npm run build
-```
-
-Then, run the deployment process, using the `deploy` script:
-
-```Bash
-npm run deploy
-```
-
-After the deployment completed successfully, visit the page with data according
-to your username and repository name. Here is the page link example using the
-data mentioned above:
-https://telegram-mini-apps.github.io/is-awesome
-
-### GitHub Workflow
-
-To simplify the deployment process, this template includes a
-pre-configured [GitHub workflow](.github/workflows/github-pages-deploy.yml) that
-automatically deploys the project when changes are pushed to the `master`
-branch.
-
-To enable this workflow, create a new environment (or edit the existing one) in
-the GitHub repository settings and name it `github-pages`. Then, add the
-`master` branch to the list of deployment branches.
-
-You can find the environment settings using this
-URL: `https://github.com/{username}/{repository}/settings/environments`.
-
-![img.png](.github/deployment-branches.png)
-
-In case, you don't want to do it automatically, or you don't use GitHub as the
-project codebase, remove the `.github` directory.
-
-### GitHub Web Interface
-
-Alternatively, developers can configure automatic deployment using the GitHub
-web interface. To do this, follow the link:
-`https://github.com/{username}/{repository}/settings/pages`.
-
-## TON Connect
-
-This boilerplate utilizes
-the [TON Connect](https://docs.ton.org/develop/dapps/ton-connect/overview)
-project to demonstrate how developers can integrate functionality related to TON
-cryptocurrency.
-
-The TON Connect manifest used in this boilerplate is stored in the `public`
-folder, where all publicly accessible static files are located. Remember
-to [configure](https://docs.ton.org/develop/dapps/ton-connect/manifest) this
-file according to your project's information.
-
-## Useful Links
-
-- [Platform documentation](https://docs.telegram-mini-apps.com/)
-- [@telegram-apps/sdk-react documentation](https://docs.telegram-mini-apps.com/packages/telegram-apps-sdk-react)
-- [Telegram developers community chat](https://t.me/devs)
+MIT License. See `LICENSE` for more information.
