@@ -1,4 +1,4 @@
-import { Address, beginCell, Cell, Contract, contractAddress, ContractProvider, Sender, SendMode } from '@ton/core';
+import { Address, beginCell, Cell, Contract, contractAddress, ContractProvider, parseTuple, Sender, SendMode, serializeTuple, TupleBuilder } from '@ton/core';
 
 export type NFTAlbumConfig = {
     ownerAddress: Address;
@@ -77,4 +77,13 @@ export class NFTAlbum implements Contract {
             nfts: result.stack.readCell()
         };
     }
+
+    // NOT WORKING YET
+    static async getAlbumByOwner(provider: ContractProvider, owner: Address) {
+        const tuple = new TupleBuilder();
+        tuple.writeAddress(owner);
+        const result = await provider.get('get_album_data_by_owner', tuple.build());
+        return new NFTAlbum(result.stack.readAddress());
+    }
 }
+

@@ -23,3 +23,8 @@ int op::get_shareable_data() asm "0xbcde2345 PUSHINT";  ;; Get shareable album d
 
 ;; NFT Creator
 const int op::make_collection = "op::make_collection"c;
+
+;; NFT Collection
+const int op::deploy_nft = "op::deploy"c;
+const int op::deploy_batch = "op::deploy_batch"c;
+const int op::change_owner = "op::change_owner"c;

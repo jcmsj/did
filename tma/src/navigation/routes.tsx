@@ -9,6 +9,7 @@ import { ProfilePage } from '@/pages/ProfilePage/ProfilePage';
 import JoinPage from '@/pages/JoinPage';
 import OrganizePage from '@/pages/OrganizePage';
 import MakeCertPage from '@/pages/MakeCertPage';
+import CertificatesPage from '@/pages/CertificatesPage';
 
 interface Route {
   path: string;
@@ -26,6 +27,7 @@ export const routes: Route[] = [
   {path: '/organize', Component: OrganizePage, title: 'Organize Event'},
   {path: '/make-cert', Component: MakeCertPage, title: 'Make Certs'},
   { path: '/me', Component: ProfilePage, title: 'Profile Page' },
+  {path: '/certs', Component: CertificatesPage, title: 'Certificates'},
   {
     path: '/ton-connect',
     Component: TONConnectPage,

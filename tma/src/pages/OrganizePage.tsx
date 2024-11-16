@@ -6,32 +6,37 @@ import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Textarea } from '@/components/ui/textarea'
-import { Address, toNano } from '@ton/core'
+import { Address, beginCell, Cell, toNano } from '@ton/core'
 import { NFTCollection } from '@hacktivators/contracts/wrappers/NFTCollection'
 import { NFTCollectionCreator } from '@hacktivators/contracts/wrappers/NFTCollectionCreator'
-import { TonConnectUIProvider, useTonConnectUI } from '@tonconnect/ui-react'
+import { TonConnectUIProvider, useTonConnectUI, TonConnectButton } from '@tonconnect/ui-react'
+import { useTonClient } from '@/hooks/useTonClient'
+import { useTonConnect } from '@/hooks/useTonConnect'
 
 const COLLECTION_CREATOR_ADDRESS="EQALda7sO7TbhKRrhnQuVDkmJ1SR9iw5RVsI_woPHVW6bjnK"
 export default function OrganizePage() {
   const [ownerAddress, setOwnerAddress] = useState('')
+  
   const [collectionContent, setCollectionContent] = useState('')
-  const [royaltyPercent, setRoyaltyPercent] = useState('10')
-  const [royaltyAddress, setRoyaltyAddress] = useState('')
+  // const [royaltyPercent, setRoyaltyPercent] = useState('10')
+  // const [royaltyAddress, setRoyaltyAddress] = useState('')
   const [isDeploying, setIsDeploying] = useState(false)
-  const [ui, options] =useTonConnectUI()
+  const client = useTonClient();
+  const {sender, connected} = useTonConnect();
   const handleCreateCollection = async () => {
     try {
       // Connect to creator:
       const creator = NFTCollectionCreator.createFromAddress(Address.parse(COLLECTION_CREATOR_ADDRESS))
+      console.log("Connected to creator")
+      const c = client.open(creator)
+      const response = await c.sendCreateCollection(sender, {
+        collectionCode: beginCell().endCell(),
+        content: beginCell().storeStringTail(collectionContent).endCell(),
+        nftItemCode: beginCell().endCell(),
+        value: toNano('0.05')
+      })
+      console.log(response)
       setIsDeploying(true)
-      
-      // Configure collection parameters
-      const collection =  
-      // Deploy collection
-      await collection.sendDeploy(provider.sender(), toNano('0.05'))
-      await provider.waitForDeploy(collection.address)
-
-      console.log('Collection deployed at:', collection.address)
 
     } catch (error) {
       console.error('Error creating collection:', error)
@@ -52,12 +57,9 @@ export default function OrganizePage() {
         <CardContent className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="ownerAddress">Owner Address</Label>
-            <Input
-              id="ownerAddress"
-              placeholder="Enter TON wallet address"
-              value={ownerAddress}
-              onChange={(e) => setOwnerAddress(e.target.value)}
-            />
+            <div className='pl-24'>
+            <TonConnectButton />
+            </div>
           </div>
 
           <div className="space-y-2">
@@ -72,7 +74,7 @@ export default function OrganizePage() {
 
           <Separator />
 
-          <div className="space-y-2">
+          {/* <div className="space-y-2">
             <Label htmlFor="royaltyPercent">Royalty Percentage</Label>
             <Input
               id="royaltyPercent"
@@ -91,7 +93,7 @@ export default function OrganizePage() {
               value={royaltyAddress}
               onChange={(e) => setRoyaltyAddress(e.target.value)}
             />
-          </div>
+          </div> */}
 
           <Button 
             className="w-full" 

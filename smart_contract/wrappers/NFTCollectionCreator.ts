@@ -42,7 +42,7 @@ export class NFTCollectionCreator implements Contract {
             queryID?: number;
         }
     ) {
-        await provider.internal(via, {
+        return await provider.internal(via, {
             value: opts.value,
             sendMode: SendMode.PAY_GAS_SEPARATELY,
             body: beginCell()

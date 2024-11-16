@@ -1,4 +1,4 @@
-import { Address, beginCell, Cell, Contract, contractAddress, ContractProvider, Sender, SendMode } from '@ton/core';
+import { Address, beginCell, Cell, Contract, contractAddress, ContractProvider, Sender, SendMode, TupleBuilder, TupleReader } from '@ton/core';
 
 export type NFTItemConfig = {
     index: number;
@@ -67,5 +67,22 @@ export class NFTItem implements Contract {
             ownerAddress: result.stack.readAddress(),
             content: result.stack.readCell(),
         };
+    }
+
+    async getOwnedItems(provider: ContractProvider, owner: Address) {
+        const tuple = new TupleBuilder();
+        tuple.writeAddress(owner);
+        const result = await provider.get('get_owned_items', tuple.build());
+        const items = [];
+        while (result.stack.peek()) {
+            items.push({
+                index: result.stack.readNumber(),
+                collectionAddress: result.stack.readAddress(),
+                ownerAddress: result.stack.readAddress(),
+                content: result.stack.readCell(),
+            });
+        }
+
+        return items;
     }
 }

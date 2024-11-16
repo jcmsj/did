@@ -22,10 +22,12 @@ function ErrorBoundaryError({ error }: { error: unknown }) {
 }
 
 export function Root() {
+  const manifestUrl = publicUrl('tonconnect-manifest.json');
   return (
     <ErrorBoundary fallback={ErrorBoundaryError}>
       <TonConnectUIProvider
-        manifestUrl={publicUrl('tonconnect-manifest.json')}
+        manifestUrl={manifestUrl}
+        
       >
         <App/>
       </TonConnectUIProvider>

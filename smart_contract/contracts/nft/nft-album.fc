@@ -67,3 +67,10 @@
 (slice, cell) get_album_data() method_id {
     return load_data();
 }
+
+;; get album data given an owner address
+(slice, cell) get_album_data_by_owner(slice owner_address) method_id {
+    var (album_owner_address, nfts) = load_data();
+    throw_unless(401, equal_slices_bits(owner_address, album_owner_address));
+    return (album_owner_address, nfts);
+}
