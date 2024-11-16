@@ -3,6 +3,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import react from '@vitejs/plugin-react-swc';
 import mkcert from 'vite-plugin-mkcert';
 import Icons from 'unplugin-icons/vite'
+import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import path from "path"
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -20,6 +21,9 @@ export default defineConfig({
     Icons({
       compiler: 'jsx', 
       jsx: 'react'
+    }),
+    nodePolyfills({
+      include: ['buffer'],
     }),
   ],
   publicDir: './public',

@@ -10,3 +10,16 @@ int op::report_royalty_params() asm "0xa8cb00ad PUSHINT";
 int op::edit_content() asm "0x1a0b9d51 PUSHINT";
 int op::transfer_editorship() asm "0x1c04412a PUSHINT";
 int op::editorship_assigned() asm "0x511a4463 PUSHINT";
+
+;; NFT Album operations
+int op::add_nft() asm "0x1234abcd PUSHINT";  ;; Add NFT to album
+int op::remove_nft() asm "0x4321dcba PUSHINT";  ;; Remove NFT from album
+int op::get_album_data() asm "0xabcd1234 PUSHINT";  ;; Get album data
+
+;; NFT Shareable Album operations
+int op::share_nft() asm "0xdcba4321 PUSHINT";  ;; Share NFT in viewable album
+int op::view_album() asm "0x2345bcde PUSHINT";  ;; View shared album
+int op::get_shareable_data() asm "0xbcde2345 PUSHINT";  ;; Get shareable album data
+
+;; NFT Creator
+const int op::make_collection = "op::make_collection"c;
