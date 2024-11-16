@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+    "composite": true,
+      // ...
+      "baseUrl": ".",
+      "paths": {
+        "@/*": [
+          "./src/*"
+        ]
+      }
+      // ...
+    }
+  }
+  

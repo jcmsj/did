@@ -2,6 +2,10 @@
 - [ ] Telegram Bot
 - [ ] Telegram Mini-App
 
-Features
+MVP Features
 - [ ] 
 - [ ]
+
+### Work division
+- [ ] Smart contract API
+- [ ] Telegram Mini-app in React
