@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Certificate } from "@/components/Certificate";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
 export default function CheckAlbumPage() {
   const [address, setAddress] = useState("");
@@ -32,30 +33,40 @@ export default function CheckAlbumPage() {
   };
 
   return (
-    <div className="p-4 max-w-4xl mx-auto">
-      <div className="flex gap-4 mb-8">
-        <Input
-          placeholder="Enter TON address"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-        />
-        <Button onClick={handleCheck}>Check Certificates</Button>
-      </div>
-
-      {showCertificates && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {sampleUserCertificates.map((cert) => (
-            <Certificate
-              key={cert.id}
-              eventName={cert.eventName}
-              dateIssued={cert.dateIssued}
-              issuer={cert.issuer}
-              certificateId={cert.id}
-              imageUrl={cert.imageUrl}
+    <div className="p-4">
+      <Card>
+        <CardHeader>
+          <CardTitle>Check Certificate Album</CardTitle>
+          <CardDescription>
+            Enter a TON address to view their certificates
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex gap-4">
+            <Input
+              placeholder="Enter TON address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
             />
-          ))}
-        </div>
-      )}
+            <Button onClick={handleCheck}>Check Certificates</Button>
+          </div>
+
+          {showCertificates && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {sampleUserCertificates.map((cert) => (
+                <Certificate
+                  key={cert.id}
+                  eventName={cert.eventName}
+                  dateIssued={cert.dateIssued}
+                  issuer={cert.issuer}
+                  certificateId={cert.id}
+                  imageUrl={cert.imageUrl}
+                />
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 }
