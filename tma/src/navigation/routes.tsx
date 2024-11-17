@@ -6,11 +6,18 @@ import { LaunchParamsPage } from '@/pages/LaunchParamsPage.tsx';
 import { ThemeParamsPage } from '@/pages/ThemeParamsPage.tsx';
 import { TONConnectPage } from '@/pages/TONConnectPage/TONConnectPage';
 import { ProfilePage } from '@/pages/ProfilePage/ProfilePage';
-import JoinPage from '@/pages/JoinPage';
+// import JoinPage from '@/pages/JoinPage';
+// import OrganizePage from '@/pages/OrganizePage';
+// import MakeCertPage from '@/pages/MakeCertPage';
+// import CertificatesPage from '@/pages/CertificatesPage';
+import HomePage from '@/pages/HomePage';
+import CreateEventPage from '@/pages/CreateEventPage';
+import JoinEventPage from '@/pages/JoinEventPage'; 
+import CertificatesPage from '@/pages/CertificatesPage';
+import SubCollectionsPage from '@/pages/SubCollectionsPage';
 import OrganizePage from '@/pages/OrganizePage';
 import MakeCertPage from '@/pages/MakeCertPage';
-import CertificatesPage from '@/pages/CertificatesPage';
-
+import JoinPage from '@/pages/JoinPage';
 interface Route {
   path: string;
   Component: ComponentType;
@@ -19,7 +26,7 @@ interface Route {
 }
 
 export const routes: Route[] = [
-  { path: '/', Component: IndexPage },
+  { path: '/', Component: IndexPage, title:"Home" },
   { path: '/init-data', Component: InitDataPage, title: 'Init Data' },
   { path: '/theme-params', Component: ThemeParamsPage, title: 'Theme Params' },
   { path: '/launch-params', Component: LaunchParamsPage, title: 'Launch Params' },
@@ -28,6 +35,10 @@ export const routes: Route[] = [
   {path: '/make-cert', Component: MakeCertPage, title: 'Make Certs'},
   { path: '/me', Component: ProfilePage, title: 'Profile Page' },
   {path: '/certs', Component: CertificatesPage, title: 'Certificates'},
+  // { path: '/create', Component: CreateEventPage, title: 'Create Event' },
+  // { path: '/join', Component: JoinEventPage, title: 'Join Event' },
+  // { path: '/certificates', Component: CertificatesPage, title: 'My Certificates' },
+  // { path: '/collections', Component: SubCollectionsPage, title: 'Certificate Collections' },
   {
     path: '/ton-connect',
     Component: TONConnectPage,

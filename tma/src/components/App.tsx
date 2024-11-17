@@ -13,19 +13,23 @@ export function App() {
   const isDark = useSignal(miniApp.isDark);
   const { connected } = useTonConnect();
   const { isOnBoardingComplete } = useOnBoarding() // TODO
+
   return (
     <AppRoot
       appearance={isDark ? 'dark' : 'light'}
       platform={['macos', 'ios'].includes(lp.platform) ? 'ios' : 'base'}
     >
       <HashRouter>
-        {connected ?
+        {
           <Routes>
             {routes.map((route) => <Route key={route.path} {...route} />)}
             <Route path="*" element={<Navigate to="/" />} />
-          </Routes> : <TonConnectButton />
+          </Routes>
         }
       </HashRouter>
+      <div className='w-full flex flex-col items-end p-4'>
+      <TonConnectButton />
+      </div>
     </AppRoot>
   );
 }

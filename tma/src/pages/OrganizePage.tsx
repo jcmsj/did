@@ -7,39 +7,51 @@ import { Separator } from '@/components/ui/separator'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Textarea } from '@/components/ui/textarea'
 import { Address, beginCell, Cell, toNano } from '@ton/core'
-import { NFTCollection } from '@hacktivators/contracts/wrappers/NFTCollection'
 import { NFTCollectionCreator } from '@hacktivators/contracts/wrappers/NFTCollectionCreator'
-import { TonConnectUIProvider, useTonConnectUI, TonConnectButton } from '@tonconnect/ui-react'
+import { TonConnectButton } from '@tonconnect/ui-react'
 import { useTonClient } from '@/hooks/useTonClient'
 import { useTonConnect } from '@/hooks/useTonConnect'
 
-const COLLECTION_CREATOR_ADDRESS="EQALda7sO7TbhKRrhnQuVDkmJ1SR9iw5RVsI_woPHVW6bjnK"
+const COLLECTION_CREATOR_ADDRESS = "EQALda7sO7TbhKRrhnQuVDkmJ1SR9iw5RVsI_woPHVW6bjnK"
+
 export default function OrganizePage() {
-  const [ownerAddress, setOwnerAddress] = useState('')
-  
-  const [collectionContent, setCollectionContent] = useState('')
-  // const [royaltyPercent, setRoyaltyPercent] = useState('10')
-  // const [royaltyAddress, setRoyaltyAddress] = useState('')
+  const [eventName, setEventName] = useState('')
+  const [eventDate, setEventDate] = useState('')
+  const [eventTime, setEventTime] = useState('')
+  const [eventLocation, setEventLocation] = useState('')
+  const [eventDescription, setEventDescription] = useState('')
+  const [maxAttendees, setMaxAttendees] = useState('')
+  const [eventImageUrl, setEventImageUrl] = useState('')
   const [isDeploying, setIsDeploying] = useState(false)
+  
   const client = useTonClient();
-  const {sender, connected} = useTonConnect();
+  const { sender, connected } = useTonConnect();
+
   const handleCreateCollection = async () => {
     try {
-      // Connect to creator:
-      const creator = NFTCollectionCreator.createFromAddress(Address.parse(COLLECTION_CREATOR_ADDRESS))
-      console.log("Connected to creator")
-      const c = client.open(creator)
-      const response = await c.sendCreateCollection(sender, {
-        collectionCode: beginCell().endCell(),
-        content: beginCell().storeStringTail(collectionContent).endCell(),
-        nftItemCode: beginCell().endCell(),
-        value: toNano('0.05')
-      })
-      console.log(response)
-      setIsDeploying(true)
+      if (!client || !sender) return
 
+      const eventMetadata = {
+        name: eventName,
+        description: eventDescription,
+        date: eventDate,
+        time: eventTime,
+        location: eventLocation,
+        maxAttendees: parseInt(maxAttendees),
+        image: eventImageUrl
+      }
+
+      const creator = NFTCollectionCreator.createFromAddress(Address.parse(COLLECTION_CREATOR_ADDRESS))
+      const response = await creator.sendCreateCollection(client.provider(sender.address), sender, {
+        collectionCode: beginCell().endCell(),
+        content: beginCell().storeUint(0, 8).storeString(JSON.stringify(eventMetadata)).endCell(),
+        nftItemCode: beginCell().endCell(),
+        value: toNano('0.05'),
+      })
+      
+      setIsDeploying(true)
     } catch (error) {
-      console.error('Error creating collection:', error)
+      console.error('Error creating event:', error)
     } finally {
       setIsDeploying(false)
     }
@@ -49,58 +61,90 @@ export default function OrganizePage() {
     <Page>
       <Card>
         <CardHeader>
-          <CardTitle>Create NFT Collection</CardTitle>
+          <CardTitle>Create an Event</CardTitle>
           <CardDescription>
-            Deploy a new NFT collection contract with customizable parameters
+            Create a new event and mint attendance NFTs
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="ownerAddress">Owner Address</Label>
-            <div className='pl-24'>
-            <TonConnectButton />
+            <Label htmlFor="eventName">Event Name</Label>
+            <Input
+              id="eventName"
+              placeholder="Enter event name"
+              value={eventName}
+              onChange={(e) => setEventName(e.target.value)}
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="eventDate">Date</Label>
+              <Input
+                id="eventDate"
+                type="date"
+                value={eventDate}
+                onChange={(e) => setEventDate(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="eventTime">Time</Label>
+              <Input
+                id="eventTime"
+                type="time"
+                value={eventTime}
+                onChange={(e) => setEventTime(e.target.value)}
+              />
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="content">Collection Content</Label>
-            <Textarea
-              id="content"
-              placeholder="Enter collection metadata URL or content"
-              value={collectionContent}
-              onChange={(e) => setCollectionContent(e.target.value)}
-            />
-          </div>
-
-          <Separator />
-
-          {/* <div className="space-y-2">
-            <Label htmlFor="royaltyPercent">Royalty Percentage</Label>
+            <Label htmlFor="eventLocation">Location</Label>
             <Input
-              id="royaltyPercent"
-              type="number"
-              placeholder="Enter royalty percentage"
-              value={royaltyPercent}
-              onChange={(e) => setRoyaltyPercent(e.target.value)}
+              id="eventLocation"
+              placeholder="Enter event location"
+              value={eventLocation}
+              onChange={(e) => setEventLocation(e.target.value)}
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="royaltyAddress">Royalty Address</Label>
-            <Input
-              id="royaltyAddress"
-              placeholder="Enter royalty recipient address"
-              value={royaltyAddress}
-              onChange={(e) => setRoyaltyAddress(e.target.value)}
+            <Label htmlFor="eventDescription">Description</Label>
+            <Textarea
+              id="eventDescription"
+              placeholder="Enter event description"
+              value={eventDescription}
+              onChange={(e) => setEventDescription(e.target.value)}
             />
-          </div> */}
+          </div>
 
-          <Button 
-            className="w-full" 
+          <div className="space-y-2">
+            <Label htmlFor="maxAttendees">Maximum Attendees</Label>
+            <Input
+              id="maxAttendees"
+              type="number"
+              placeholder="Enter maximum number of attendees"
+              value={maxAttendees}
+              onChange={(e) => setMaxAttendees(e.target.value)}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="eventImageUrl">Event Image URL</Label>
+            <Input
+              id="eventImageUrl"
+              placeholder="Enter event image URL"
+              value={eventImageUrl}
+              onChange={(e) => setEventImageUrl(e.target.value)}
+            />
+          </div>
+
+          <Button
+            className="w-full"
             onClick={handleCreateCollection}
             disabled={isDeploying}
           >
-            {isDeploying ? 'Deploying...' : 'Create Collection'}
+            {isDeploying ? 'Creating Event...' : 'Create Event'}
           </Button>
         </CardContent>
       </Card>

@@ -93,7 +93,6 @@ slice calculate_nft_item_address(int wc, cell state_init) {
     }
 
     throw_unless(401, equal_slices_bits(sender_address, owner_address));
-    
   
     if (op == op::deploy_nft) { ;; deploy new nft
       int item_index = in_msg_body~load_uint(64);
