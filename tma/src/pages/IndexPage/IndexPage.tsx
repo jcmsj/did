@@ -4,7 +4,7 @@ import { Link } from '@/components/Link/Link.tsx';
 import { Page } from '@/components/Page.tsx';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { CalendarPlus, Users, Award } from 'lucide-react';
+import { CalendarPlus, Users, Award, Search } from 'lucide-react';
 
 export const IndexPage: FC = () => {
   return (
@@ -60,6 +60,23 @@ export const IndexPage: FC = () => {
             <CardContent>
               <Button asChild className="w-full" variant="secondary">
                 <Link to="/certs">View Certificates</Link>
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Search className="h-5 w-5" />
+                Check Certificates
+              </CardTitle>
+              <CardDescription>
+                View certificates by wallet address
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button asChild className="w-full" variant="secondary">
+                <Link to="/check-album">Check Now</Link>
               </Button>
             </CardContent>
           </Card>

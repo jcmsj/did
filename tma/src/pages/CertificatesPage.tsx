@@ -8,13 +8,54 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { getFromStorage, saveToStorage } from "@/lib/utils";
 
+// Add this near the top of CertificatesPage.tsx
+const sampleCertificates = [
+  {
+    id: "cert001",
+    eventName: "Telegram Mini Apps Workshop",
+    dateIssued: "2023-11-15",
+    issuer: "Pavel Lesyuk - TON Foundation",
+    imageUrl: "https://placeholder.co/400x300"
+  },
+  {
+    id: "cert002",
+    eventName: "No-Code Solutions Workshop",
+    dateIssued: "2023-11-15",
+    issuer: "Mikey Molina - Xircus",
+    imageUrl: "https://placeholder.co/400x300"
+  },
+  {
+    id: "cert003",
+    eventName: "Pitch Mastery Workshop",
+    dateIssued: "2023-11-16",
+    issuer: "Falco Pangkey - Xircus",
+    imageUrl: "https://placeholder.co/400x300"
+  },
+  {
+    id: "cert004",
+    eventName: "Telegram Wallet Masterclass",
+    dateIssued: "2023-11-16",
+    issuer: "Miguel Avila - Wallet in Telegram",
+    imageUrl: "https://placeholder.co/400x300"
+  },
+  {
+    id: "cert005",
+    eventName: "TON Ecosystem Leadership",
+    dateIssued: "2023-11-17",
+    issuer: "Kate Bahajati - TON Society",
+    imageUrl: "https://placeholder.co/400x300"
+  }
+];
+// Replace the certificates constant with:
+
 export default function CertificatesPage() {
   const [selectedCerts, setSelectedCerts] = useState<string[]>([]);
   const [showCreateCollection, setShowCreateCollection] = useState(false);
   const [collectionName, setCollectionName] = useState("");
   const [viewFee, setViewFee] = useState("");
   
-  const certificates = getFromStorage('certificates') || [];
+  // const certificates = getFromStorage('certificates') || [];
+  const certificates = sampleCertificates;
 
   const handleCreateCollection = () => {
     const collection = {

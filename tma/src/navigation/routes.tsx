@@ -12,12 +12,15 @@ import { ProfilePage } from '@/pages/ProfilePage/ProfilePage';
 // import CertificatesPage from '@/pages/CertificatesPage';
 import HomePage from '@/pages/HomePage';
 import CreateEventPage from '@/pages/CreateEventPage';
-import JoinEventPage from '@/pages/JoinEventPage'; 
+import JoinEventPage from '@/pages/JoinEventPage';
 import CertificatesPage from '@/pages/CertificatesPage';
 import SubCollectionsPage from '@/pages/SubCollectionsPage';
 import OrganizePage from '@/pages/OrganizePage';
 import MakeCertPage from '@/pages/MakeCertPage';
 import JoinPage from '@/pages/JoinPage';
+import CheckAlbumPage from '@/pages/CheckAlbumPage';
+
+
 interface Route {
   path: string;
   Component: ComponentType;
@@ -26,15 +29,17 @@ interface Route {
 }
 
 export const routes: Route[] = [
-  { path: '/', Component: IndexPage, title:"Home" },
+  { path: '/', Component: IndexPage, title: "Home" },
   { path: '/init-data', Component: InitDataPage, title: 'Init Data' },
   { path: '/theme-params', Component: ThemeParamsPage, title: 'Theme Params' },
   { path: '/launch-params', Component: LaunchParamsPage, title: 'Launch Params' },
-  {path: '/join', Component: JoinPage, title: 'Join Event'},
-  {path: '/organize', Component: OrganizePage, title: 'Organize Event'},
-  {path: '/make-cert', Component: MakeCertPage, title: 'Make Certs'},
+  { path: '/join', Component: JoinPage, title: 'Join Event' },
+  { path: '/organize', Component: OrganizePage, title: 'Organize Event' },
+  { path: '/make-cert', Component: MakeCertPage, title: 'Make Certs' },
   { path: '/me', Component: ProfilePage, title: 'Profile Page' },
-  {path: '/certs', Component: CertificatesPage, title: 'Certificates'},
+  { path: '/certs', Component: CertificatesPage, title: 'Certificates' },
+  { path: '/check-album', Component: CheckAlbumPage, title: 'Check Certificates' },
+
   // { path: '/create', Component: CreateEventPage, title: 'Create Event' },
   // { path: '/join', Component: JoinEventPage, title: 'Join Event' },
   // { path: '/certificates', Component: CertificatesPage, title: 'My Certificates' },
